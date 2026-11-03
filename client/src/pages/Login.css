@@ -1,0 +1,1959 @@
+
+.adventure-login {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(145deg, #a5e9ff, #d9f9d5 45%, #f5f7c9);
+  color: #153b31;
+  padding: 35px 5%;
+  isolation: isolate;
+}
+
+/* Decorative scenery */
+
+.login-scenery {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.scenery-sun {
+  position: absolute;
+  top: 8%;
+  right: 20%;
+  font-size: 130px;
+  opacity: 0.7;
+  filter: drop-shadow(0 10px 25px #8edc83);
+}
+
+.scenery-cloud {
+  position: absolute;
+  color: white;
+  font-size: 100px;
+  opacity: 0.6;
+}
+
+.cloud-one {
+  top: 5%;
+  left: 15%;
+}
+
+.cloud-two {
+  top: 20%;
+  right: 5%;
+}
+
+.scenery-hill {
+  position: absolute;
+  bottom: -160px;
+  width: 700px;
+  height: 400px;
+  border-radius: 50%;
+}
+
+.hill-one {
+  left: -150px;
+  background: #66c66d;
+}
+
+.hill-two {
+  right: -180px;
+  bottom: -190px;
+  background: #35a95b;
+}
+
+.scenery-grass {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  opacity: 0.7;
+}
+
+/* Main content */
+
+.adventure-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  align-items: center;
+  gap: 60px;
+}
+
+/* Left section */
+
+.adventure-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.adventure-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  font-size: 48px;
+  filter: drop-shadow(0 5px 5px #0002);
+}
+
+.adventure-brand h1 {
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #155b35;
+}
+
+.adventure-brand p {
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  color: #438b45;
+}
+
+.adventure-heading {
+  margin: 35px 0;
+  max-width: 550px;
+}
+
+.heading-label {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #ffffffa8;
+  color: #267744;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.adventure-heading h2 {
+  margin-top: 18px;
+  font-size: clamp(35px, 4vw, 58px);
+  line-height: 1.12;
+  font-weight: 900;
+  color: #174a2e;
+  text-shadow: 0 3px 0 #ffffff80;
+}
+
+.adventure-heading h2 span {
+  color: #e78a13;
+}
+
+.adventure-heading p {
+  max-width: 430px;
+  margin-top: 18px;
+  color: #315b43;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Login card */
+
+.adventure-login-card {
+  width: 100%;
+  max-width: 390px;
+  padding: 25px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 45px rgba(28, 75, 42, 0.2);
+  border: 1px solid #ffffff;
+}
+
+.login-card-heading {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-card-heading h2 {
+  font-size: 25px;
+  font-weight: 900;
+  color: #173c32;
+}
+
+.login-card-heading p {
+  margin-top: 7px;
+  color: #647b70;
+  font-size: 12px;
+}
+
+/* Social login buttons */
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.social-button {
+  width: 100%;
+  height: 42px;
+  border: none;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 7px #00000012;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.social-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+
+.google {
+  background: #fff;
+  color: #25352c;
+  border: 1px solid #e2e8e3;
+}
+
+.google-mark {
+  font-size: 19px;
+  font-weight: 900;
+  color: #4285f4;
+}
+
+.facebook {
+  background: #1877f2;
+  color: #fff;
+}
+
+.facebook-mark {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.apple {
+  background: #111;
+  color: #fff;
+}
+
+.apple-mark {
+  font-size: 17px;
+}
+
+/* Divider */
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 17px 0;
+  color: #8b9b90;
+  font-size: 11px;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #dce5dd;
+}
+
+/* Form fields */
+
+.adventure-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.adventure-input {
+  height: 43px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 13px;
+  background: #f3f7f4;
+  border: 1px solid #dfe9e1;
+  border-radius: 9px;
+}
+
+.adventure-input span {
+  color: #789084;
+  font-size: 15px;
+}
+
+.adventure-input input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #183c2e;
+  font-size: 12px;
+}
+
+.adventure-input input::placeholder {
+  color: #87998e;
+}
+
+/* Remember and forgot password */
+
+.login-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+}
+
+.login-options label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #4c6757;
+}
+
+.login-options input {
+  accent-color: #16a34a;
+}
+
+.login-options a {
+  color: #1678e8;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Submit button */
+
+.adventure-submit {
+  width: 100%;
+  height: 45px;
+  margin-top: 5px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #29bd69, #14944d);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 5px 12px #15934c30;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.adventure-submit:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+/* Signup */
+
+.adventure-signup {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #607a6a;
+}
+
+.adventure-signup a {
+  color: #1678e8;
+  font-weight: 800;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+/* Right game illustration area */
+
+.adventure-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.game-logo-art {
+  text-align: center;
+  transform: rotate(-3deg);
+}
+
+.logo-puzzle {
+  font-size: 75px;
+  filter: drop-shadow(0 8px 5px #0002);
+}
+
+.game-logo-art h2 {
+  font-size: 38px;
+  font-weight: 1000;
+  line-height: 0.95;
+  color: #f8c629;
+  -webkit-text-stroke: 1px #74420c;
+  text-shadow: 3px 4px 0 #7a4b13;
+}
+
+.game-logo-art h2 span {
+  display: block;
+  margin-top: 5px;
+  font-size: 23px;
+  color: #60e0df;
+  -webkit-text-stroke: 1px #13545b;
+}
+
+.game-logo-art p {
+  margin-top: 12px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 3px #285b35;
+}
+
+/* Rewards */
+
+.reward-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reward-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 15px;
+  background: linear-gradient(135deg, #0c8d8d, #075b69);
+  border: 2px solid #5ce4d3;
+  border-radius: 12px;
+  color: #fff;
+  box-shadow: 0 5px 10px #164c3c30;
+}
+
+.reward-item > span {
+  font-size: 25px;
+}
+
+.reward-item strong,
+.reward-item small {
+  display: block;
+}
+
+.reward-item strong {
+  font-size: 12px;
+}
+
+.reward-item small {
+  margin-top: 3px;
+  font-size: 10px;
+  color: #b9f3e7;
+}
+
+/* Wooden sign decorations */
+
+.wooden-signs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transform: rotate(-3deg);
+}
+
+.wooden-signs div {
+  padding: 10px 14px;
+  border: 2px solid #8b5a2b;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #bd8446, #805024);
+  color: #fff8cf;
+  font-size: 13px;
+  font-weight: 900;
+  text-shadow: 0 2px 2px #4c2a10;
+  box-shadow: 0 4px 6px #0002;
+}
+
+.adventure-slogan {
+  color: #fff;
+  font-size: 19px;
+  font-weight: 900;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.4;
+  text-shadow: 0 3px 4px #28653a;
+  transform: rotate(-7deg);
+}
+
+/* Footer */
+
+.adventure-footer {
+  margin-top: 30px;
+  text-align: center;
+  color: #477b52;
+  font-size: 11px;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .adventure-content {
+    grid-template-columns: 1fr;
+    max-width: 450px;
+    gap: 35px;
+  }
+
+  .adventure-left {
+    align-items: center;
+  }
+
+  .adventure-heading {
+    text-align: center;
+  }
+
+  .adventure-heading p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .adventure-right {
+    display: none;
+  }
+
+  .adventure-login-card {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 480px) {
+  .adventure-login {
+    padding: 25px 15px;
+  }
+
+  .adventure-brand h1 {
+    font-size: 21px;
+  }
+
+  .adventure-heading {
+    margin: 25px 0;
+  }
+
+  .adventure-heading h2 {
+    font-size: 37px;
+  }
+
+  .adventure-heading p {
+    font-size: 13px;
+  }
+
+  .adventure-login-card {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .login-card-heading h2 {
+    font-size: 23px;
+  }
+}
+
+
+
+/* =========================================
+   MOBILE LOGIN BOARD
+   ========================================= */
+
+@media (max-width: 600px) {
+  .adventure-login {
+    min-height: 100svh;
+    height: auto;
+    padding: 14px 10px;
+    overflow-x: hidden;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(20, 120, 180, 0.12),
+        rgba(20, 100, 40, 0.15)
+      ),
+      linear-gradient(135deg, #80d9f5, #b5f0b0 55%, #f5e9a5);
+  }
+
+  .adventure-content {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* Brand at the top */
+
+  .adventure-left {
+    width: 100%;
+    align-items: center;
+  }
+
+  .adventure-brand {
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .brand-icon {
+    font-size: 38px;
+  }
+
+  .adventure-brand h1 {
+    font-size: 23px;
+    color: #14552d;
+    text-shadow: 0 1px 0 #ffffff;
+  }
+
+  .adventure-brand p {
+    font-size: 10px;
+    letter-spacing: 4px;
+  }
+
+  /* Hide large desktop intro text */
+
+  .adventure-heading {
+    display: none;
+  }
+
+  /* Login board */
+
+  .adventure-login-card {
+    width: 100%;
+    max-width: 340px;
+    margin-top: 18px;
+    padding: 22px 18px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.94);
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 12px 30px rgba(21, 75, 45, 0.25);
+  }
+
+  .login-card-heading {
+    margin-bottom: 17px;
+  }
+
+  .login-card-heading h2 {
+    font-size: 24px;
+    color: #163d31;
+  }
+
+  .login-card-heading p {
+    max-width: 230px;
+    margin: 6px auto 0;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  /* Social login */
+
+  .social-buttons {
+    gap: 8px;
+  }
+
+  .social-button {
+    height: 39px;
+    border-radius: 25px;
+    font-size: 11px;
+  }
+
+  .google {
+    background: #ffffff;
+    border: 1px solid #dfe7e1;
+    color: #263a2d;
+  }
+
+  .facebook {
+    background: #0866ff;
+  }
+
+  .apple {
+    background: #050505;
+  }
+
+  /* Divider */
+
+  .login-divider {
+    margin: 14px 0;
+    font-size: 10px;
+  }
+
+  /* Inputs */
+
+  .adventure-form {
+    gap: 10px;
+  }
+
+  .adventure-input {
+    height: 40px;
+    padding: 0 11px;
+    border-radius: 9px;
+    background: #f0f4f1;
+  }
+
+  .adventure-input input {
+    font-size: 11px;
+  }
+
+  /* Login options */
+
+  .login-options {
+    font-size: 10px;
+  }
+
+  .login-options label {
+    gap: 5px;
+  }
+
+  .login-options a {
+    font-size: 10px;
+  }
+
+  /* Main login button */
+
+  .adventure-submit {
+    height: 42px;
+    margin-top: 3px;
+    border-radius: 10px;
+    font-size: 13px;
+    background: linear-gradient(180deg, #2ecb70, #15954d);
+  }
+
+  /* Signup */
+
+  .adventure-signup {
+    margin-top: 16px;
+    font-size: 11px;
+  }
+
+  /* Hide desktop reward section */
+
+  .adventure-right {
+    display: none;
+  }
+
+  .adventure-footer {
+    margin-top: 20px;
+    font-size: 10px;
+  }
+
+  /* Mobile scenery */
+
+  .scenery-sun {
+    top: 7%;
+    right: 5%;
+    font-size: 75px;
+  }
+
+  .cloud-one {
+    top: 3%;
+    left: -5%;
+    font-size: 70px;
+  }
+
+  .cloud-two {
+    top: 25%;
+    right: -10%;
+    font-size: 60px;
+  }
+
+  .hill-one {
+    width: 450px;
+    height: 250px;
+    bottom: -100px;
+    left: -180px;
+  }
+
+  .hill-two {
+    width: 400px;
+    height: 250px;
+    bottom: -120px;
+    right: -170px;
+  }
+
+  .scenery-grass {
+    bottom: 5px;
+    font-size: 20px;
+  }
+}
+
+/* Extra-small mobile devices */
+
+@media (max-width: 360px) {
+  .adventure-login {
+    padding: 10px 8px;
+  }
+
+  .adventure-login-card {
+    padding: 18px 14px;
+  }
+
+  .adventure-brand h1 {
+    font-size: 20px;
+  }
+
+  .login-card-heading h2 {
+    font-size: 22px;
+  }
+}
+
+
+/* =========================================
+   GOOGLE AND APPLE LOGIN BUTTONS
+   ========================================= */
+
+.social-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.social-button {
+  width: 100%;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 16px;
+
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.social-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.social-button:active {
+  transform: scale(0.98);
+}
+
+.social-button:focus-visible {
+  outline: 3px solid #86efac;
+  outline-offset: 3px;
+}
+
+.social-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Google button */
+
+.social-button.google {
+  background: #ffffff;
+  color: #202124;
+  border: 1px solid #dadce0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.social-button.google:hover {
+  background: #f8faff;
+}
+
+/* Apple button */
+
+.social-button.apple {
+  background: #111111;
+  color: #ffffff;
+  border: 1px solid #111111;
+}
+
+.social-button.apple:hover {
+  background: #292929;
+}
+
+/* Mobile layout */
+
+@media (max-width: 600px) {
+  .social-buttons {
+    gap: 10px;
+  }
+
+  .social-button {
+    min-height: 44px;
+    font-size: 12px;
+  }
+
+  .social-icon {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+
+/* =========================================
+   MOBILE LOGIN - NO PAGE SCROLL
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  .adventure-login {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    padding: 8px 10px;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .adventure-content {
+    width: 100%;
+    max-width: 380px;
+    height: 100%;
+    max-height: 780px;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+  }
+
+  .adventure-left {
+    width: 100%;
+    align-items: center;
+  }
+
+  /* Compact logo */
+
+  .adventure-brand {
+    margin: 0 0 12px;
+    justify-content: center;
+  }
+
+  .brand-icon {
+    font-size: 32px;
+  }
+
+  .adventure-brand h1 {
+    font-size: 21px;
+  }
+
+  .adventure-brand p {
+    font-size: 9px;
+    letter-spacing: 3px;
+  }
+
+  /* Remove the large intro section */
+
+  .adventure-heading {
+    display: none;
+  }
+
+  /* Compact login board */
+
+  .adventure-login-card {
+    width: 100%;
+    max-width: 340px;
+    margin: 0;
+    padding: 18px 16px;
+    border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(20, 70, 40, 0.2);
+  }
+
+  .login-card-heading {
+    margin-bottom: 13px;
+  }
+
+  .login-card-heading h2 {
+    font-size: 22px;
+  }
+
+  .login-card-heading p {
+    margin-top: 4px;
+    font-size: 10px;
+  }
+
+  /* Google and Apple buttons */
+
+  .social-buttons {
+    gap: 8px;
+  }
+
+  .social-button {
+    height: 40px;
+    min-height: 40px;
+    padding: 0 12px;
+    font-size: 11px;
+  }
+
+  .social-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Divider */
+
+  .login-divider {
+    margin: 11px 0;
+    font-size: 9px;
+  }
+
+  /* Inputs */
+
+  .adventure-form {
+    gap: 9px;
+  }
+
+  .adventure-input {
+    height: 38px;
+    padding: 0 10px;
+  }
+
+  .adventure-input input {
+    font-size: 11px;
+  }
+
+  /* Remember me and forgot password */
+
+  .login-options {
+    font-size: 10px;
+  }
+
+  .login-options a {
+    font-size: 10px;
+  }
+
+  /* Login button */
+
+  .adventure-submit {
+    height: 40px;
+    margin-top: 2px;
+    font-size: 12px;
+  }
+
+  /* Signup */
+
+  .adventure-signup {
+    margin-top: 12px;
+    font-size: 10px;
+  }
+
+  /* Hide extra desktop content */
+
+  .adventure-right {
+    display: none;
+  }
+
+  .adventure-footer {
+    display: none;
+  }
+
+  /* Background decorations */
+
+  .scenery-sun {
+    top: 5%;
+    right: 5%;
+    font-size: 60px;
+  }
+
+  .cloud-one {
+    top: 3%;
+    left: -5%;
+    font-size: 55px;
+  }
+
+  .cloud-two {
+    top: 25%;
+    right: -10%;
+    font-size: 50px;
+  }
+
+  .hill-one {
+    width: 350px;
+    height: 180px;
+    bottom: -80px;
+    left: -150px;
+  }
+
+  .hill-two {
+    width: 300px;
+    height: 180px;
+    bottom: -90px;
+    right: -130px;
+  }
+
+  .scenery-grass {
+    bottom: 0;
+    font-size: 17px;
+  }
+}
+
+/* Short mobile screens */
+
+@media (max-width: 600px) and (max-height: 700px) {
+  .adventure-brand {
+    margin-bottom: 8px;
+  }
+
+  .brand-icon {
+    font-size: 27px;
+  }
+
+  .adventure-brand h1 {
+    font-size: 18px;
+  }
+
+  .adventure-login-card {
+    padding: 13px 14px;
+  }
+
+  .login-card-heading {
+    margin-bottom: 9px;
+  }
+
+  .login-card-heading h2 {
+    font-size: 19px;
+  }
+
+  .social-button {
+    height: 35px;
+    min-height: 35px;
+  }
+
+  .login-divider {
+    margin: 8px 0;
+  }
+
+  .adventure-input {
+    height: 34px;
+  }
+
+  .adventure-submit {
+    height: 36px;
+  }
+
+  .adventure-signup {
+    margin-top: 9px;
+  }
+}
+
+
+/* =========================================
+   DESKTOP LOGIN - FIT ONE SCREEN
+   ========================================= */
+
+@media (min-width: 601px) {
+
+  .adventure-login {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    padding: 20px 4%;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .adventure-content {
+    width: 100%;
+    max-width: 1150px;
+    height: 100%;
+    max-height: 850px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    align-items: center;
+    gap: clamp(25px, 4vw, 60px);
+  }
+
+  .adventure-left {
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  /* Compact brand */
+
+  .adventure-brand {
+    margin-bottom: 20px;
+  }
+
+  .brand-icon {
+    font-size: 40px;
+  }
+
+  .adventure-brand h1 {
+    font-size: 24px;
+  }
+
+  .adventure-brand p {
+    font-size: 10px;
+    letter-spacing: 4px;
+  }
+
+  /* Compact intro */
+
+  .adventure-heading {
+    margin: 15px 0 22px;
+  }
+
+  .adventure-heading h2 {
+    font-size: clamp(32px, 3.5vw, 48px);
+  }
+
+  .adventure-heading p {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* Login board */
+
+  .adventure-login-card {
+    width: 100%;
+    max-width: 390px;
+    margin: 0;
+    padding: 22px;
+  }
+
+  .login-card-heading {
+    margin-bottom: 14px;
+  }
+
+  .login-card-heading h2 {
+    font-size: 23px;
+  }
+
+  .login-card-heading p {
+    font-size: 11px;
+  }
+
+  /* Social buttons */
+
+  .social-buttons {
+    gap: 9px;
+  }
+
+  .social-button {
+    min-height: 40px;
+    height: 40px;
+    font-size: 12px;
+  }
+
+  /* Divider */
+
+  .login-divider {
+    margin: 12px 0;
+  }
+
+  /* Form */
+
+  .adventure-form {
+    gap: 10px;
+  }
+
+  .adventure-input {
+    height: 39px;
+  }
+
+  .adventure-input input {
+    font-size: 12px;
+  }
+
+  .login-options {
+    font-size: 11px;
+  }
+
+  .adventure-submit {
+    height: 41px;
+    margin-top: 3px;
+  }
+
+  .adventure-signup {
+    margin-top: 13px;
+    font-size: 11px;
+  }
+
+  /* Right-side game artwork */
+
+  .adventure-right {
+    width: 100%;
+    gap: 18px;
+  }
+
+  .logo-puzzle {
+    font-size: 65px;
+  }
+
+  .game-logo-art h2 {
+    font-size: 34px;
+  }
+
+  .game-logo-art h2 span {
+    font-size: 21px;
+  }
+
+  .reward-list {
+    gap: 8px;
+  }
+
+  .reward-item {
+    padding: 10px 12px;
+  }
+
+  .wooden-signs {
+    gap: 6px;
+  }
+
+  .wooden-signs div {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .adventure-slogan {
+    font-size: 16px;
+  }
+
+    .adventure-footer {
+    display: block;
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #14532d;
+    z-index: 10;
+    }
+}
+
+/* Short desktop and laptop screens */
+
+@media (min-width: 601px) and (max-height: 750px) {
+  .adventure-login {
+    padding: 12px 3%;
+  }
+
+  .adventure-content {
+    gap: 25px;
+  }
+
+  .adventure-brand {
+    margin-bottom: 12px;
+  }
+
+  .adventure-heading {
+    margin: 8px 0 14px;
+  }
+
+  .adventure-heading h2 {
+    font-size: 34px;
+  }
+
+  .adventure-heading p {
+    font-size: 12px;
+    margin-top: 8px;
+  }
+
+  .adventure-login-card {
+    padding: 15px 18px;
+  }
+
+  .login-card-heading {
+    margin-bottom: 10px;
+  }
+
+  .login-divider {
+    margin: 8px 0;
+  }
+
+  .adventure-form {
+    gap: 7px;
+  }
+
+  .adventure-input {
+    height: 35px;
+  }
+
+  .adventure-submit {
+    height: 37px;
+  }
+
+  .adventure-signup {
+    margin-top: 9px;
+  }
+
+  .adventure-right {
+    gap: 12px;
+  }
+
+  .logo-puzzle {
+    font-size: 48px;
+  }
+
+  .game-logo-art h2 {
+    font-size: 28px;
+  }
+
+  .game-logo-art h2 span {
+    font-size: 18px;
+  }
+
+  .reward-item {
+    padding: 7px 10px;
+  }
+
+  .wooden-signs div {
+    padding: 6px 10px;
+  }
+}
+
+
+/* =========================================
+   DESKTOP - SHOW COMPLETE LOGIN DASHBOARD
+   ========================================= */
+
+@media (min-width: 601px) {
+
+  .adventure-login {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    padding: 16px 4%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .adventure-content {
+    width: 100%;
+    max-width: 1150px;
+    height: 100%;
+    max-height: 820px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .adventure-left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  /* Keep brand, remove large intro to save height */
+
+  .adventure-brand {
+    margin: 0 0 20px;
+  }
+
+  .adventure-heading {
+    display: none;
+  }
+
+  /* Complete login card */
+
+  .adventure-login-card {
+    width: 100%;
+    max-width: 390px;
+    margin: 0;
+    padding: 22px;
+    flex-shrink: 0;
+  }
+
+  .login-card-heading {
+    margin-bottom: 14px;
+  }
+
+  .login-card-heading h2 {
+    font-size: 23px;
+  }
+
+  .login-card-heading p {
+    font-size: 11px;
+    margin-top: 5px;
+  }
+
+  .social-buttons {
+    gap: 9px;
+  }
+
+  .social-button {
+    height: 40px;
+    min-height: 40px;
+    font-size: 12px;
+  }
+
+  .login-divider {
+    margin: 11px 0;
+  }
+
+  .adventure-form {
+    gap: 9px;
+  }
+
+  .adventure-input {
+    height: 38px;
+  }
+
+  .login-options {
+    font-size: 11px;
+  }
+
+  .adventure-submit {
+    height: 40px;
+    margin-top: 2px;
+  }
+
+  .adventure-signup {
+    margin-top: 12px;
+    font-size: 11px;
+  }
+
+  /* Right game artwork */
+
+  .adventure-right {
+    width: 100%;
+    gap: 16px;
+  }
+
+  .logo-puzzle {
+    font-size: 60px;
+  }
+
+  .game-logo-art h2 {
+    font-size: 32px;
+  }
+
+  .game-logo-art h2 span {
+    font-size: 20px;
+  }
+
+  .reward-list {
+    gap: 8px;
+  }
+
+  .reward-item {
+    padding: 9px 12px;
+  }
+
+  .wooden-signs {
+    gap: 6px;
+  }
+
+  .wooden-signs div {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+
+  .adventure-slogan {
+    font-size: 15px;
+  }
+
+  .adventure-footer {
+    display: none;
+  }
+}
+
+/* Smaller desktop/laptop height */
+
+@media (min-width: 601px) and (max-height: 700px) {
+  .adventure-login {
+    padding: 8px 3%;
+    position: relative;
+
+  }
+
+  .adventure-brand {
+    margin-bottom: 12px;
+  }
+
+  .adventure-login-card {
+    padding: 15px 18px;
+  }
+
+  .login-card-heading {
+    margin-bottom: 9px;
+  }
+
+  .login-divider {
+    margin: 7px 0;
+  }
+
+  .adventure-form {
+    gap: 6px;
+  }
+
+  .adventure-input {
+    height: 33px;
+  }
+
+  .adventure-submit {
+    height: 35px;
+  }
+
+  .adventure-signup {
+    margin-top: 8px;
+  }
+
+  .adventure-right {
+    gap: 10px;
+  }
+
+  .logo-puzzle {
+    font-size: 45px;
+  }
+
+  .game-logo-art h2 {
+    font-size: 26px;
+  }
+
+  .game-logo-art h2 span {
+    font-size: 17px;
+  }
+
+  .reward-item {
+    padding: 6px 9px;
+  }
+
+  .wooden-signs div {
+    padding: 5px 9px;
+  }
+}
+
+
+/* =========================================
+   APPLE WORM ADVENTURE - PREMIUM UI EFFECTS
+   ========================================= */
+
+/* Smooth page transitions */
+.adventure-login,
+.adventure-login-card,
+.social-button,
+.adventure-submit,
+.adventure-input,
+.adventure-brand,
+.adventure-right {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
+}
+
+/* Login card hover */
+.adventure-login-card {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 15px 40px rgba(18, 80, 45, 0.15);
+}
+
+.adventure-login-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 50px rgba(18, 80, 45, 0.22);
+}
+
+/* Google button hover */
+.social-button.google {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #dfe5e2;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+}
+
+.social-button.google:hover {
+  transform: translateY(-2px);
+  background: #f8fbff;
+  border-color: #b7d4ff;
+  box-shadow: 0 7px 18px rgba(66, 133, 244, 0.18);
+}
+
+/* Apple button hover */
+.social-button.apple {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #111;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+.social-button.apple:hover {
+  transform: translateY(-2px);
+  background: #252525;
+  border-color: #333;
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Button click animation */
+.social-button:active,
+.adventure-submit:active {
+  transform: scale(0.97);
+}
+
+/* Login button */
+.adventure-submit {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #22c55e, #059669);
+  color: white;
+  border: none;
+  box-shadow: 0 5px 14px rgba(5, 150, 105, 0.25);
+}
+
+.adventure-submit:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #16a34a, #047857);
+  box-shadow: 0 9px 22px rgba(5, 150, 105, 0.35);
+}
+
+/* Input fields */
+.adventure-input {
+  border: 1px solid #e0e9e3;
+  background: #f5f8f5;
+}
+
+.adventure-input:hover {
+  border-color: #86c99e;
+  background: #ffffff;
+}
+
+.adventure-input:focus-within {
+  border-color: #16a34a;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+}
+
+/* Input focus */
+.adventure-input input:focus {
+  outline: none;
+}
+
+/* Brand hover */
+.adventure-brand:hover {
+  transform: scale(1.02);
+}
+
+/* Right-side artwork hover */
+.adventure-right {
+  transform-origin: center;
+}
+
+.adventure-right:hover {
+  transform: translateY(-3px);
+}
+
+/* Reward cards */
+.reward-item {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.reward-item:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 8px 20px rgba(0, 80, 60, 0.2);
+}
+
+/* Wooden signs */
+.wooden-signs div {
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+  cursor: pointer;
+}
+
+.wooden-signs div:hover {
+  transform: translateX(-6px) scale(1.02);
+  filter: brightness(1.12);
+}
+
+/* Links */
+.adventure-login-card a {
+  transition: color 0.2s ease;
+}
+
+.adventure-login-card a:hover {
+  color: #059669;
+  text-decoration: underline;
+}
+
+/* Accessibility: keyboard users */
+.social-button:focus-visible,
+.adventure-submit:focus-visible {
+  outline: 3px solid #86efac;
+  outline-offset: 3px;
+}
+
+/* Disable hover movement on touch devices */
+@media (hover: none) {
+  .adventure-login-card:hover,
+  .adventure-brand:hover,
+  .adventure-right:hover,
+  .social-button:hover,
+  .adventure-submit:hover,
+  .reward-item:hover,
+  .wooden-signs div:hover {
+    transform: none;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+
+
+/* =========================================
+   EARTH GLOBE HOVER ANIMATION
+   ========================================= */
+
+.earth {
+  display: inline-block;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+
+  transition:
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1),
+    filter 0.4s ease;
+
+  cursor: pointer;
+}
+
+/* Rotate the Earth on hover */
+
+.earth:hover {
+  transform: perspective(800px) rotateY(360deg) scale(1.04);
+
+  filter:
+    drop-shadow(0 12px 20px rgba(20, 100, 180, 0.25))
+    brightness(1.05);
+}
+
+/* Optional gentle floating animation */
+
+@keyframes earthFloat {
+  0% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -6px;
+  }
+
+  100% {
+    translate: 0 0;
+  }
+}
+
+/* Floating effect only when not hovered */
+
+.earth:not(:hover) {
+  animation: earthFloat 4s ease-in-out infinite;
+}
+
+/* Touch devices */
+
+@media (hover: none) {
+  .earth {
+    animation: none;
+  }
+}
+
+/* Respect reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .earth {
+    animation: none;
+    transition: none;
+  }
+}
+
+
+/* =========================================
+   APPLE & EARTH - 360° ROTATE ON HOVER
+   ========================================= */
+
+/* Let the mouse pass through the layout wrappers
+   so it can reach the earth in the background */
+.adventure-content,
+.adventure-left {
+  pointer-events: none;
+}
+
+/* Re-enable the mouse on the parts that need it */
+.adventure-brand,
+.adventure-login-card,
+.adventure-right {
+  pointer-events: auto;
+}
+
+/* Earth and apple must be hoverable */
+.scenery-sun,
+.brand-icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Transforms don't work on inline elements, so the apple needs this */
+.brand-icon {
+  display: inline-block;
+  transform-origin: center center;
+}
+
+.scenery-sun {
+  transform-origin: center center;
+}
+
+@keyframes spin360 {
+  from {
+    transform: perspective(600px) rotateY(0deg);
+  }
+  to {
+    transform: perspective(600px) rotateY(360deg);
+  }
+}
+
+/* One full 360° turn on hover */
+.scenery-sun:hover,
+.brand-icon:hover {
+  animation: spin360 1s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scenery-sun:hover,
+  .brand-icon:hover {
+    animation: none;
+  }
+}
+

@@ -1,0 +1,94 @@
+
+.dashboard {
+  min-height: 100vh;
+  padding: 30px;
+  background: linear-gradient(135deg, #e8f9e8, #f5fff0);
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dashboard-header h1 {
+  color: #237a35;
+  font-size: 32px;
+}
+
+.dashboard-content {
+  max-width: 1000px;
+  margin: 70px auto;
+  text-align: center;
+}
+
+.dashboard-content h2 {
+  font-size: 32px;
+  color: #204d2a;
+}
+
+.dashboard-content p {
+  font-size: 18px;
+  color: #555;
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  margin: 40px 0;
+}
+
+.stat-card {
+  padding: 30px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card h3 {
+  color: #237a35;
+}
+
+.stat-card p {
+  font-size: 30px;
+  font-weight: bold;
+  color: #222;
+}
+
+.dashboard-actions {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dashboard button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  background: #2e8b3c;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dashboard button:hover {
+  background: #206b2d;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-content {
+    margin: 40px auto;
+  }
+}

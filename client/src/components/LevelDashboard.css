@@ -1,0 +1,317 @@
+.levels-dashboard {
+  width: min(100%, 1250px);
+  margin: 0 auto;
+  padding: 35px 24px 50px;
+  font-family: Arial, sans-serif;
+  color: #173b2b;
+}
+
+.levels-heading {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.levels-heading h2 {
+  margin: 0 0 10px;
+  color: #166534;
+  font-size: clamp(26px, 4vw, 36px);
+  font-weight: 800;
+}
+
+.levels-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 16px;
+}
+
+/* Grid */
+
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(280px, 1fr)
+  );
+  gap: 24px;
+}
+
+/* Main card */
+
+.level-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+
+  border: 2px solid #e2e8f0;
+  border-radius: 20px;
+
+  background: linear-gradient(
+    145deg,
+    #ffffff,
+    #f8fafc
+  );
+
+  color: #1e293b;
+  font: inherit;
+  text-align: left;
+
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* Hover */
+
+.level-card:hover:not(:disabled) {
+  transform: translateY(-6px);
+
+  border-color: var(--level-color);
+
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.15);
+}
+
+.level-card:focus-visible {
+  outline: 3px solid var(--level-color);
+  outline-offset: 3px;
+}
+
+/* Current unlocked level */
+
+.level-card.is-current {
+  border: 3px solid #22c55e;
+
+  background: linear-gradient(
+    145deg,
+    #f0fdf4,
+    #ffffff
+  );
+
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.15);
+}
+
+/* Completed level */
+
+.level-card.is-completed {
+  border-color: #facc15;
+
+  background: linear-gradient(
+    145deg,
+    #fffbeb,
+    #ffffff
+  );
+}
+
+/* Locked level */
+
+.level-card.is-locked {
+  border-color: #cbd5e1;
+  background: #f1f5f9;
+  cursor: not-allowed;
+}
+
+.level-card.is-locked:hover {
+  transform: none;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* Level preview */
+
+.level-card-art {
+  position: relative;
+  aspect-ratio: 900 / 520;
+  overflow: hidden;
+  background: #312e81;
+}
+
+.level-preview {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.35s ease;
+}
+
+.level-card:hover:not(:disabled) .level-preview {
+  transform: scale(1.04);
+}
+
+/* Locked preview */
+
+.is-locked .level-preview {
+  filter: grayscale(1) brightness(0.48);
+}
+
+/* Lock overlay */
+
+.level-lock {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(15, 23, 42, 0.2);
+}
+
+.level-lock span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 75px;
+  height: 75px;
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  font-size: 38px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* Completed badge */
+
+.level-completed-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  background: #facc15;
+  color: #713f12;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Card content */
+
+.level-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  flex: 1;
+
+  padding: 20px;
+}
+
+.level-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.level-number {
+  color: #64748b;
+
+  font-size: 12px;
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.level-difficulty {
+  padding: 5px 12px;
+
+  border-radius: 999px;
+
+  background: var(--level-color, #16a34a);
+  color: white;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.level-card h3 {
+  margin: 0;
+
+  color: #166534;
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.level-description {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.level-status {
+  margin-top: auto;
+  padding-top: 10px;
+
+  color: #16a34a;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.is-completed .level-status {
+  color: #a16207;
+}
+
+.is-locked .level-status {
+  color: #64748b;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .levels-dashboard {
+    padding: 24px 16px 35px;
+  }
+
+  .levels-grid {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(240px, 1fr)
+    );
+
+    gap: 18px;
+  }
+
+  .level-card-body {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .levels-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .level-card h3 {
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .level-card,
+  .level-preview {
+    transition: none;
+  }
+}
