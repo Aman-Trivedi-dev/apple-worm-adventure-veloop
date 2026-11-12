@@ -2,7 +2,8 @@
 export const WIDTH = 900;
 export const HEIGHT = 520;
 
-export const LEVELS = [
+// Original manually designed levels
+const BASE_LEVELS = [
   {
     id: 1,
     name: "Zigzag Start",
@@ -141,9 +142,21 @@ export const LEVELS = [
     worm: { x: 60, y: 385 },
     platforms: [
       { x: 30, y: 420, width: 170, height: 35 },
-      { x: 330, y: 400, width: 120, height: 35, move: { axis: "x", range: 90, speed: 0.025 } },
+      {
+        x: 330,
+        y: 400,
+        width: 120,
+        height: 35,
+        move: { axis: "x", range: 90, speed: 0.025 },
+      },
       { x: 570, y: 350, width: 150, height: 35 },
-      { x: 740, y: 300, width: 110, height: 35, move: { axis: "y", range: 60, speed: 0.03 } },
+      {
+        x: 740,
+        y: 300,
+        width: 110,
+        height: 35,
+        move: { axis: "y", range: 60, speed: 0.03 },
+      },
       { x: 790, y: 180, width: 100, height: 35 },
     ],
     apples: [
@@ -167,10 +180,22 @@ export const LEVELS = [
     worm: { x: 50, y: 405 },
     platforms: [
       { x: 20, y: 440, width: 150, height: 35 },
-      { x: 270, y: 400, width: 100, height: 35, move: { axis: "x", range: 70, speed: 0.025 } },
+      {
+        x: 270,
+        y: 400,
+        width: 100,
+        height: 35,
+        move: { axis: "x", range: 70, speed: 0.025 },
+      },
       { x: 480, y: 350, width: 100, height: 35 },
       { x: 630, y: 300, width: 90, height: 35 },
-      { x: 790, y: 230, width: 100, height: 35, move: { axis: "y", range: 60, speed: 0.03 } },
+      {
+        x: 790,
+        y: 230,
+        width: 100,
+        height: 35,
+        move: { axis: "y", range: 60, speed: 0.03 },
+      },
       { x: 700, y: 110, width: 110, height: 35 },
     ],
     apples: [
@@ -183,21 +208,76 @@ export const LEVELS = [
     ],
     spikes: [],
     hazards: [
-      { x: 590, y: 235, radius: 25, move: { axis: "x", range: 60, speed: 0.04 } },
-      { x: 745, y: 200, radius: 22, move: { axis: "y", range: 50, speed: 0.045, phase: 1 } },
+      {
+        x: 590,
+        y: 235,
+        radius: 25,
+        move: { axis: "x", range: 60, speed: 0.04 },
+      },
+      {
+        x: 745,
+        y: 200,
+        radius: 22,
+        move: { axis: "y", range: 50, speed: 0.045, phase: 1 },
+      },
     ],
     goal: { x: 770, y: 60, width: 35, height: 50 },
   },
 ];
 
-// Easier version of a level, used after the player's first game over on it:
-// fewer and narrower spikes, one smaller and slower spiral, and wider and
-// slower moving platforms. A level can set its own `easy` overrides instead.
+// Generate levels 8 to 50 using the original level layouts.
+const getGeneratedLevels = () => {
+  const generatedLevels = [];
+
+  for (let id = 8; id <= 50; id++) {
+    const template = BASE_LEVELS[(id - 8) % BASE_LEVELS.length];
+
+    // Create an independent copy of the original level.
+    const level = JSON.parse(JSON.stringify(template));
+
+    let difficulty;
+    let accent;
+
+    if (id <= 15) {
+      difficulty = "Easy";
+      accent = "#2e8b3c";
+    } else if (id <= 25) {
+      difficulty = "Medium";
+      accent = "#d9902b";
+    } else if (id <= 40) {
+      difficulty = "Hard";
+      accent = "#d2552f";
+    } else {
+      difficulty = "Expert";
+      accent = "#8a3fb0";
+    }
+
+    generatedLevels.push({
+      ...level,
+      id,
+      name: `Adventure Level ${id}`,
+      difficulty,
+      accent,
+      pattern: `Challenge ${id}: ${template.pattern}`,
+    });
+  }
+
+  return generatedLevels;
+};
+
+// Complete collection of 50 levels.
+export const LEVELS = [
+  ...BASE_LEVELS,
+  ...getGeneratedLevels(),
+];
+
+// Easier version of a level after the player's first game over.
 export const getEasyLevel = (level) => {
   if (level.easy) return { ...level, ...level.easy };
 
   return {
     ...level,
+
     platforms: level.platforms.map((p) =>
       p.move
         ? {
@@ -206,24 +286,36 @@ export const getEasyLevel = (level) => {
             width: p.width + 40,
             move: { ...p.move, speed: p.move.speed * 0.6 },
           }
-        : p,
+        : p
     ),
+
     spikes: (level.spikes || [])
       .filter((_, index) => index % 2 === 0)
       .map((s) => {
         const width = Math.round(s.width * 0.75);
-        return { ...s, x: s.x + Math.round((s.width - width) / 2), width };
+
+        return {
+          ...s,
+          x: s.x + Math.round((s.width - width) / 2),
+          width,
+        };
       }),
-    hazards: level.hazards.slice(0, 1).map((h) => ({
+
+    hazards: (level.hazards || []).slice(0, 1).map((h) => ({
       ...h,
       radius: Math.round(h.radius * 0.8),
-      move: h.move && { ...h.move, speed: h.move.speed * 0.55 },
+      move: h.move && {
+        ...h.move,
+        speed: h.move.speed * 0.55,
+      },
     })),
   };
 };
 
+// Get a level by ID.
 export const getLevel = (id) => {
   const number = parseInt(id, 10);
   const safe = Number.isFinite(number) ? number : 1;
+
   return LEVELS[Math.min(Math.max(safe, 1), LEVELS.length) - 1];
 };

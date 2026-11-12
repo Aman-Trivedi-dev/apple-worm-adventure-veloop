@@ -1,7 +1,9 @@
+
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LEVELS, WIDTH, HEIGHT } from "../game/levels";
 import { getProgress } from "../game/progress";
+import { getGameProgress } from "../services/gameService";
 import "./LevelDashboard.css";
 
 function LevelPreview({ level }) {
@@ -90,31 +92,66 @@ function LevelPreview({ level }) {
   );
 }
 
-function LevelDashboard() {
+function LevelDashboard({ serverUnlockedLevel }) {
   const navigate = useNavigate();
 
   const [progress, setProgress] = useState(() => getProgress());
+  const [backendUnlockedLevel, setBackendUnlockedLevel] = useState(
+    serverUnlockedLevel ?? null
+  );
 
-  // Refresh progress whenever the dashboard becomes active.
-  const refreshProgress = useCallback(() => {
+  // Refresh progress from backend and local storage
+  const refreshProgress = useCallback(async () => {
     setProgress(getProgress());
+
+    const token =
+      localStorage.getItem("token") ||
+      sessionStorage.getItem("token");
+
+    if (!token) {
+      setBackendUnlockedLevel(null);
+      return;
+    }
+
+    try {
+      const serverProgress = await getGameProgress();
+
+      setBackendUnlockedLevel(
+        Number(serverProgress?.unlockedLevel || 1)
+      );
+    } catch (error) {
+      console.error("Failed to refresh level progress:", error);
+    }
   }, []);
 
   useEffect(() => {
-    window.addEventListener("focus", refreshProgress);
-    window.addEventListener("storage", refreshProgress);
+    if (serverUnlockedLevel !== undefined && serverUnlockedLevel !== null) {
+      setBackendUnlockedLevel(Number(serverUnlockedLevel));
+    }
+  }, [serverUnlockedLevel]);
 
-    // Custom event for updates made in the same browser tab.
-    window.addEventListener("progressUpdated", refreshProgress);
+  useEffect(() => {
+    refreshProgress();
+
+    const handleRefresh = () => {
+      refreshProgress();
+    };
+
+    window.addEventListener("focus", handleRefresh);
+    window.addEventListener("storage", handleRefresh);
+    window.addEventListener("progressUpdated", handleRefresh);
 
     return () => {
-      window.removeEventListener("focus", refreshProgress);
-      window.removeEventListener("storage", refreshProgress);
-      window.removeEventListener("progressUpdated", refreshProgress);
+      window.removeEventListener("focus", handleRefresh);
+      window.removeEventListener("storage", handleRefresh);
+      window.removeEventListener("progressUpdated", handleRefresh);
     };
   }, [refreshProgress]);
 
-  const unlockedLevel = Number(progress.unlocked ?? 1);
+  // Backend is the source of truth for logged-in users
+  const unlockedLevel = Number(
+    backendUnlockedLevel ?? progress.unlocked ?? 1
+  );
 
   const handleLevelClick = (levelId) => {
     if (levelId <= unlockedLevel) {
@@ -156,7 +193,9 @@ function LevelDashboard() {
                 completed ? "is-completed" : "",
                 level.id === unlockedLevel ? "is-current" : "",
               ].join(" ")}
-              style={{ "--level-color": level.accent || "#16a34a" }}
+              style={{
+                "--level-color": level.accent || "#16a34a",
+              }}
               disabled={locked}
               onClick={() => handleLevelClick(level.id)}
             >

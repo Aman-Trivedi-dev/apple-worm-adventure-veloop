@@ -1,3 +1,4 @@
+
 import express from "express";
 import bcrypt from "bcryptjs";
 import User from "../models/User.js";
@@ -7,15 +8,13 @@ import crypto from "crypto";
 
 const router = express.Router();
 
-// Initialize Google OAuth2 Client
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-// POST: Register a new user
+// POST: Register
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // 1. Check required fields
     if (!username || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -23,7 +22,6 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // 2. Validate password length
     if (password.length < 8) {
       return res.status(400).json({
         success: false,
@@ -31,10 +29,8 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // 3. Normalize email
     const normalizedEmail = email.trim().toLowerCase();
 
-    // 4. Check if user already exists
     const existingUser = await User.findOne({
       email: normalizedEmail,
     });
@@ -46,17 +42,14 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    // 5. Hash password
     const passwordHash = await bcrypt.hash(password, 12);
 
-    // 6. Create user
     const user = await User.create({
       username: username.trim(),
       email: normalizedEmail,
       passwordHash,
     });
 
-    // 7. Send response without password hash
     return res.status(201).json({
       success: true,
       message: "User registered successfully",
@@ -79,12 +72,11 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// POST: Login an existing user
+// POST: Login
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // 1. Check required fields
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -92,15 +84,12 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // 2. Normalize email
     const normalizedEmail = email.trim().toLowerCase();
 
-    // 3. Find user
     const user = await User.findOne({
       email: normalizedEmail,
     });
 
-    // Also check user.passwordHash exists in case the user registered via Google only
     if (!user || !user.passwordHash) {
       return res.status(401).json({
         success: false,
@@ -108,7 +97,6 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // 4. Compare password with stored hash
     const isPasswordValid = await bcrypt.compare(
       password,
       user.passwordHash
@@ -121,14 +109,24 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    // 5. Generate JWT token
+    // Temporary JWT diagnostics
+    console.log(
+      "Login JWT secret loaded:",
+      Boolean(process.env.JWT_SECRET)
+    );
+
+    console.log(
+      "Login JWT secret length:",
+      process.env.JWT_SECRET?.length
+    );
+
+    // Generate JWT token
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    // 6. Send successful response
     return res.status(200).json({
       success: true,
       message: "Login successful",
@@ -157,7 +155,6 @@ router.post("/google", async (req, res) => {
   try {
     const { credential } = req.body;
 
-    // 1. Check Google credential
     if (!credential) {
       return res.status(400).json({
         success: false,
@@ -165,7 +162,6 @@ router.post("/google", async (req, res) => {
       });
     }
 
-    // 2. Verify Google credential
     const ticket = await googleClient.verifyIdToken({
       idToken: credential,
       audience: process.env.GOOGLE_CLIENT_ID,
@@ -180,21 +176,16 @@ router.post("/google", async (req, res) => {
       });
     }
 
-    // 3. Normalize email
     const normalizedEmail = payload.email.trim().toLowerCase();
 
-    // 4. Find existing user
     let user = await User.findOne({
       email: normalizedEmail,
     });
 
-    // 5. Create user if not already registered
     if (!user) {
       const username =
-        payload.name ||
-        normalizedEmail.split("@")[0];
+        payload.name || normalizedEmail.split("@")[0];
 
-      // Generate a random password hash for Google-only accounts
       const randomPassword = crypto.randomBytes(32).toString("hex");
       const passwordHash = await bcrypt.hash(randomPassword, 12);
 
@@ -205,14 +196,12 @@ router.post("/google", async (req, res) => {
       });
     }
 
-    // 6. Generate application JWT
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    // 7. Return user and token
     return res.status(200).json({
       success: true,
       message: "Google login successful",

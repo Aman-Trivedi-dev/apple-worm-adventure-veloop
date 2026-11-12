@@ -1,0 +1,92 @@
+
+.ad-reward {
+  width: 100%;
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 30px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #e8f9e8, #f4fff4);
+  border: 1px solid #c8e6c9;
+  border-radius: 18px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+.ad-reward h2 {
+  margin-bottom: 18px;
+  color: #155724;
+  font-size: 28px;
+}
+
+.ad-reward > p {
+  color: #444;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.watch-ad-button {
+  margin-top: 12px;
+  padding: 16px 28px;
+  border: none;
+  border-radius: 12px;
+  background: #278b3d;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.watch-ad-button:hover:not(:disabled) {
+  background: #1d6f30;
+  transform: translateY(-2px);
+}
+
+.watch-ad-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.ad-countdown {
+  margin: 20px auto;
+  padding: 18px;
+  background: #fff;
+  border: 2px dashed #278b3d;
+  border-radius: 12px;
+}
+
+.ad-countdown h3 {
+  color: #155724;
+}
+
+.ad-countdown p {
+  color: #444;
+  font-size: 18px;
+}
+
+.ad-success {
+  margin-top: 18px;
+  color: #16803c !important;
+  font-weight: 700;
+}
+
+.ad-error {
+  margin-top: 18px;
+  color: #d32f2f !important;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .ad-reward {
+    padding: 22px 14px;
+  }
+
+  .ad-reward h2 {
+    font-size: 23px;
+  }
+
+  .watch-ad-button {
+    width: 100%;
+    padding: 14px 12px;
+    font-size: 16px;
+  }
+}

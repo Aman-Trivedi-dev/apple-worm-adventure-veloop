@@ -1,5 +1,5 @@
-// Pure game logic (no React, no canvas) so it can be tested on its own.
-import { WIDTH, HEIGHT } from "./levels";
+
+import { WIDTH, HEIGHT } from "./levels.js";
 
 export const WORM_SIZE = { width: 70, height: 35 };
 
@@ -11,14 +11,95 @@ const PLATFORM_HEIGHT = 35;
 const SPIKE_HEIGHT = 22;
 const EPS = 0.01;
 
-// Normal platforms are solid blocks. Moving platforms are one-way.
 const isSolid = (platform) => !platform.move;
 
+// Save the last safe game state for REVIVE
+function saveCheckpoint(game) {
+  game.checkpoint = {
+    t: game.t,
+    score: game.score,
+
+    worm: {
+      x: game.worm.x,
+      y: game.worm.y,
+      velocityX: game.worm.velocityX,
+      velocityY: game.worm.velocityY,
+      onGround: game.worm.onGround,
+      standingOn: game.worm.standingOn
+        ? game.platforms.indexOf(game.worm.standingOn)
+        : null,
+    },
+
+    platforms: game.platforms.map((platform) => ({
+      x: platform.x,
+      y: platform.y,
+      dx: platform.dx,
+      dy: platform.dy,
+    })),
+
+    hazards: game.hazards.map((hazard) => ({
+      x: hazard.x,
+      y: hazard.y,
+      dx: hazard.dx,
+      dy: hazard.dy,
+    })),
+
+    apples: game.apples.map((apple) => apple.collected),
+  };
+}
+
+// Restore the last safe state after death
+export function reviveGame(game) {
+  if (!game || game.status !== "dead" || !game.checkpoint) {
+    return false;
+  }
+
+  const checkpoint = game.checkpoint;
+
+  game.t = checkpoint.t;
+  game.score = checkpoint.score;
+
+  Object.assign(game.worm, {
+    x: checkpoint.worm.x,
+    y: checkpoint.worm.y,
+    velocityX: checkpoint.worm.velocityX,
+    velocityY: checkpoint.worm.velocityY,
+    onGround: checkpoint.worm.onGround,
+    standingOn:
+      checkpoint.worm.standingOn === null
+        ? null
+        : game.platforms[checkpoint.worm.standingOn] || null,
+  });
+
+  game.platforms.forEach((platform, index) => {
+    Object.assign(platform, checkpoint.platforms[index]);
+  });
+
+  game.hazards.forEach((hazard, index) => {
+    Object.assign(hazard, checkpoint.hazards[index]);
+  });
+
+  game.apples.forEach((apple, index) => {
+    apple.collected = checkpoint.apples[index];
+  });
+
+  game.status = "playing";
+
+  // Clear any held controls before play resumes
+  game.worm.velocityX = 0;
+  game.worm.velocityY = 0;
+
+  saveCheckpoint(game);
+
+  return true;
+}
+
 export function createGame(level) {
-  return {
+  const game = {
     t: 0,
-    status: "playing", // "playing" | "dead" | "won"
+    status: "playing",
     score: 0,
+
     worm: {
       x: level.worm.x,
       y: level.worm.y,
@@ -28,6 +109,7 @@ export function createGame(level) {
       onGround: false,
       standingOn: null,
     },
+
     platforms: level.platforms.map((p) => ({
       ...p,
       height: p.height ?? PLATFORM_HEIGHT,
@@ -36,21 +118,45 @@ export function createGame(level) {
       dx: 0,
       dy: 0,
     })),
-    apples: level.apples.map((a) => ({ ...a, collected: false })),
-    hazards: level.hazards.map((h) => ({ ...h, baseX: h.x, baseY: h.y })),
-    spikes: (level.spikes || []).map((s) => ({ height: SPIKE_HEIGHT, ...s })),
+
+    apples: level.apples.map((a) => ({
+      ...a,
+      collected: false,
+    })),
+
+    hazards: level.hazards.map((h) => ({
+      ...h,
+      baseX: h.x,
+      baseY: h.y,
+      dx: 0,
+      dy: 0,
+    })),
+
+    spikes: (level.spikes || []).map((s) => ({
+      height: SPIKE_HEIGHT,
+      ...s,
+    })),
+
     goal: { ...level.goal },
   };
+
+  // Initial safe checkpoint
+  saveCheckpoint(game);
+
+  return game;
 }
 
-const wave = (move, t) => Math.sin(t * move.speed + (move.phase || 0)) * move.range;
+const wave = (move, t) =>
+  Math.sin(t * move.speed + (move.phase || 0)) * move.range;
 
-// Moves a platform or hazard along its path and remembers how far it moved
 const applyMotion = (item, t) => {
   if (!item.move) return;
 
-  const nextX = item.baseX + (item.move.axis === "x" ? wave(item.move, t) : 0);
-  const nextY = item.baseY + (item.move.axis === "y" ? wave(item.move, t) : 0);
+  const nextX =
+    item.baseX + (item.move.axis === "x" ? wave(item.move, t) : 0);
+
+  const nextY =
+    item.baseY + (item.move.axis === "y" ? wave(item.move, t) : 0);
 
   item.dx = nextX - item.x;
   item.dy = nextY - item.y;
@@ -75,7 +181,6 @@ export function stepGame(game, input) {
 
   const worm = game.worm;
 
-  // Ride along with the platform we were standing on
   if (worm.standingOn) {
     worm.x += worm.standingOn.dx;
     worm.y += worm.standingOn.dy;
@@ -94,7 +199,6 @@ export function stepGame(game, input) {
     worm.onGround = false;
   }
 
-  // Horizontal move, then push back out of any solid wall
   worm.x += worm.velocityX;
 
   for (const platform of game.platforms) {
@@ -107,7 +211,6 @@ export function stepGame(game, input) {
     }
   }
 
-  // Vertical move: land on tops, bump heads on solid undersides
   const previousY = worm.y;
 
   worm.velocityY += GRAVITY;
@@ -118,7 +221,8 @@ export function stepGame(game, input) {
 
   for (const platform of game.platforms) {
     const overlapsX =
-      worm.x + worm.width > platform.x && worm.x < platform.x + platform.width;
+      worm.x + worm.width > platform.x &&
+      worm.x < platform.x + platform.width;
 
     if (!overlapsX) continue;
 
@@ -148,7 +252,10 @@ export function stepGame(game, input) {
 
   // World boundaries
   if (worm.x < 0) worm.x = 0;
-  if (worm.x + worm.width > WIDTH) worm.x = WIDTH - worm.width;
+
+  if (worm.x + worm.width > WIDTH) {
+    worm.x = WIDTH - worm.width;
+  }
 
   // Fell off the world
   if (worm.y > HEIGHT) {
@@ -191,7 +298,10 @@ export function stepGame(game, input) {
   const wormCenterY = worm.y + worm.height / 2;
 
   for (const hazard of game.hazards) {
-    const distance = Math.hypot(wormCenterX - hazard.x, wormCenterY - hazard.y);
+    const distance = Math.hypot(
+      wormCenterX - hazard.x,
+      wormCenterY - hazard.y
+    );
 
     if (distance < hazard.radius + 15) {
       game.status = "dead";
@@ -199,9 +309,11 @@ export function stepGame(game, input) {
     }
   }
 
-  // Goal only counts once every apple is collected
+  // Goal validation
   const goal = game.goal;
-  const allApplesCollected = game.apples.every((apple) => apple.collected);
+  const allApplesCollected = game.apples.every(
+    (apple) => apple.collected
+  );
 
   if (
     allApplesCollected &&
@@ -212,4 +324,7 @@ export function stepGame(game, input) {
   ) {
     game.status = "won";
   }
+
+  // Save state only after surviving the current movement
+  saveCheckpoint(game);
 }
