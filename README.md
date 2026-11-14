@@ -186,3 +186,4 @@ The application is under active development. Additional features, testing, and p
 ---
 
 ⭐ If you like this project, consider giving the repository a star!
+
